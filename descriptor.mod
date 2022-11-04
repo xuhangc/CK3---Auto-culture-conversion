@@ -5,5 +5,5 @@ tags={
 	"Gameplay"
 }
 name="Auto culture conversion"
-supported_version="1.5.1.1"
+supported_version="1.7.*"
 remote_file_id="2732922835"

@@ -1,0 +1,50 @@
+namespace = auto_conversion
+
+auto_conversion.0002 = {
+    hidden = yes
+    type = character_event
+
+    immediate = {
+        every_sub_realm_county = {
+            if = {
+                limit = { NOT = { culture = root.culture }}
+                add_to_list = foreigners
+            }
+        }
+        if = {
+            limit = {
+                list_size = {
+					name = foreigners
+					value > 0
+				}
+				exists = cp:councillor_steward	
+            }
+            random_in_list = {
+				list = foreigners
+				save_scope_as = selected_county
+				remove_from_list = foreigners
+			}
+            set_variable = {
+				name = saved_scope
+				value = scope:selected_county
+			}	
+            if = {
+				limit = { 
+					exists = scope:selected_county
+					cp:councillor_steward.liege = root
+				}
+				cp:councillor_steward = {				
+					set_council_task = {
+						task_type = task_promote_culture
+						target = scope:selected_county.title_province
+					}				
+				}							
+			}
+            else {
+                start_default_task = yes
+            }
+            remove_variable = foreigners_count
+			remove_variable = saved_scope
+        }
+    }
+}
